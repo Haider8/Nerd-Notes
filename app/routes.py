@@ -1,9 +1,9 @@
 from flask import render_template, flash, redirect, url_for
 from app import app
-from app.forms import LoginForm, RegistrationForm, EditProfileForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
 from flask_login import current_user, login_user
 from flask_login import logout_user, login_required
-from app.models import User
+from app.models import User, Post
 from flask import request
 from werkzeug.urls import url_parse
 from app import db
@@ -25,22 +25,20 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    user = {'username': 'Miguel'}
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('index.html', title='Home', posts=posts)
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(body=form.post.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is now live!')
+        return redirect(url_for('index'))
+    posts = current_user.followed_posts().all()
+    return render_template("index.html", title='Home Page', form=form,
+                           posts=posts)
 
 
 @app.before_request
