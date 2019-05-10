@@ -4,6 +4,9 @@ from flask_login import UserMixin
 from app import db
 from app import login
 from hashlib import md5
+from time import time
+import jwt
+from app import app
 
 
 # Association table for followers (many to many relation)
@@ -58,6 +61,24 @@ class User(UserMixin, db.Model):
                 followers.c.follower_id == self.id)
         own = Post.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Post.timestamp.desc())
+
+    # Password reset
+    def get_reset_password_token(self, expires_in=600):
+        # Generates token.
+        return jwt.encode(
+            {'reset_password': self.id, 'exp': time() + expires_in},
+            app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            # Decode token and then 'reset_password' will
+            # return the ID of the user.
+            id = jwt.decode(token, app.config['SECRET_KEY'],
+                            algorithms=['HS256'])['reset_password']
+        except:
+            return
+        return User.query.get(id)
 
     def __repr__(self):
         # tells Python how to print objects of this class
