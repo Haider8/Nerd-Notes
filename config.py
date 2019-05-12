@@ -16,3 +16,5 @@ class Config(object):
     ADMINS = ['haider.lee23@gmail.com']
     # for pagination
     POSTS_PER_PAGE = 3
+    # for heroku logs
+    LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
