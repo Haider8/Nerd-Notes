@@ -1,6 +1,5 @@
-elasticsearch==7.0.1
-urllib3==1.25.2
 alembic==1.0.7
+autopep8==1.4.3
 blinker==1.4
 Click==7.0
 Flask==1.0.2
@@ -13,6 +12,7 @@ itsdangerous==1.1.0
 Jinja2==2.10
 Mako==1.0.7
 MarkupSafe==1.1.0
+pep8==1.7.1
 PyJWT==1.7.1
 python-dateutil==2.8.0
 python-dotenv==0.10.1
@@ -24,3 +24,6 @@ WTForms==2.2.1
 # requirements for Heroku
 psycopg2==2.8.2
 gunicorn==19.9.0
+# for elastic search
+urllib3==1.25.2
+elasticsearch==7.0.1
