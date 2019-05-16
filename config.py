@@ -18,3 +18,5 @@ class Config(object):
     POSTS_PER_PAGE = 3
     # for heroku logs
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
+    # for elastic search
+    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
