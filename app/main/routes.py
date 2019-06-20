@@ -28,7 +28,12 @@ def before_request():
 def index():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(body=form.post.data, author=current_user)
+        if request.form["avatar-url"]:
+            avatar_url = request.form["avatar-url"]
+            print('!!!!!!1', avatar_url)
+            post = Post(body=form.post.data, file_url=avatar_url, author=current_user)
+        else:
+            post = Post(body=form.post.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')

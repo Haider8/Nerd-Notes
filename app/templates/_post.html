@@ -6,6 +6,10 @@
                 {{ post.author.username }}
             </a>
             says:<br>{{ post.body }}
+            {% if post.file_url %}
+            <br>
+            link: <a href="{{ post.file_url }}">Uploaded file Link</a>
+            {% endif %}
         </td>
     </tr>
 </table>

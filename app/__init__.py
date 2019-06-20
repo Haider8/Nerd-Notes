@@ -39,6 +39,9 @@ def create_app(config_class=Config):
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
+    from app.upload import bp as upload_bp
+    app.register_blueprint(upload_bp)
+
     # The app.testing flag is going to be True when running
     # unit tests, due to the TESTING variable being set to
     # True in the configuration.
