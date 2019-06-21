@@ -3,6 +3,7 @@ autopep8==1.4.3
 blinker==1.4
 Click==7.0
 Flask==1.0.2
+boto3==1.9.171
 Flask-Login==0.4.1
 Flask-Mail==0.9.1
 Flask-Migrate==2.3.1
