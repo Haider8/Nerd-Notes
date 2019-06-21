@@ -1,31 +1,51 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Sign In</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }} <!-- produce token to prevent CSRF -->
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
-            {% for error in form.username.errors %}
-            <br>
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
-            {% for error in form.password.errors %}
-            <br>
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    <p>
-        Forgot Your Password?
-        <a href="{{ url_for('auth.reset_password_request') }}">Click to Reset It</a>
-    </p>
-    <p>New User? <a href="{{ url_for('auth.register') }}">Click to Register!</a></p>
+<div class="card">
+    <br>
+    <h2 class="card-title text-center">Sign In</h2>
+    <hr>
+    <center>
+        <form action="" method="post" novalidate>
+         <div class="form-group">
+            {{ form.hidden_tag() }} <!-- produce token to prevent CSRF -->
+            <p>
+                <div class="col-md-4 mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroupPrepend"><i class="fa fa-user"></i></span>
+                      </div>
+                      {{ form.username(size=32, class="form-control", placeholder="Username") }}
+                      {% for error in form.username.errors %}
+                      <br>
+                      <span style="color: red;">[{{ error }}]</span>
+                      {% endfor %}
+                  </div>
+              </div>
+          </p>
+          <p>
+            <div class="col-md-4 mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroupPrepend"><i class="fa fa-key"></i></span>
+                  </div>
+                  {{ form.password(size=32, class="form-control", placeholder="Password") }}
+                  {% for error in form.password.errors %}
+                  <br>
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+              </div>
+          </div>
+      </p>
+      <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+      <p>{{ form.submit(class="btn btn-primary") }}</p>
+  </div>
+</form>
+<p>
+    Forgot Your Password?
+    <a href="{{ url_for('auth.reset_password_request') }}">Click to Reset It</a>
+</p>
+<p>Not registered yet? <a href="{{ url_for('auth.register') }}">Register now!</a></p>
+</center>
+</div>
 {% endblock %}
