@@ -7,7 +7,17 @@
             <td>
                 <h1>User: {{ user.username }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-                {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+                {% if user.last_seen %}<p>Last seen on: <span id="last-seen">{{ user.last_seen }}</span></p>{% endif %}
+                <script>
+                    var utc_time = document.getElementById('last-seen').innerText
+                    document.getElementById('last-seen').innerText = moment.utc(utc_time).local().fromNow()
+                    console.log(utc_time) 
+
+                    var date = new Date(utc_time)
+                    console.log(date)
+                    var local = moment().utc(date).format('MM/DD/YYYY, h:mm a');
+                    console.log(local, "- UTC now to local"); 
+                </script>
                 <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
                 {% if user == current_user %}
                 <p><a href="{{ url_for('main.edit_profile') }}">Edit your profile</a></p>
