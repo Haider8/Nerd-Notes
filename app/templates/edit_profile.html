@@ -1,23 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Edit Profile</h1>
+<br>
+<center>
+    <h2>Edit your profile</h2>
+    <hr>
     <form action="" method="post">
+       <div class="form-group">
         {{ form.hidden_tag() }}
         <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.about_me.label }}<br>
-            {{ form.about_me(cols=50, rows=4) }}<br>
-            {% for error in form.about_me.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+            <div class="col-md-4 mb-3">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroupPrepend"><i class="fa fa-user"></i></span>
+                  </div>
+                  {{ form.username(size=32, class="form-control", placeholder="Username") }}
+                  {% for error in form.username.errors %}
+                  <br>
+                  <span style="color: red;">[{{ error }}]</span>
+                  {% endfor %}
+              </div>
+          </div>
+      </p>
+      <p>
+        <div class="col-md-4 mb-3">
+            <div class="input-group">
+                {{ form.about_me(rows=6, class="form-control", style="resize: none; width:300px", placeholder="About me...") }}<br>
+                {% for error in form.about_me.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+        </div>
+    </p>
+    <p>{{ form.submit(value="Save Changes", class="btn btn-primary", style="width: 200px") }}</p>
+</form>
+</center>
 {% endblock %}
