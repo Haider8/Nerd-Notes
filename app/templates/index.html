@@ -7,7 +7,19 @@
         {{ form.hidden_tag() }}
         <p>
             {{ form.post.label }}<br>
-            {{ form.post(cols=32, rows=4) }}<br>
+            {{ form.post(id="editor", cols=32, rows=4) }}<br>
+            <script>
+              ClassicEditor
+                .create( document.querySelector( '#editor' ), {
+                  cloudServices: {
+                      tokenUrl: 'https://40399.cke-cs.com/token/dev/yqTfSc8UarSQisdsJNnXIQ9zMxNZLCESewzVJkuVAmx19HTS6N6tNp8n8Ry9',
+                      uploadUrl: 'https://40399.cke-cs.com/easyimage/upload/'
+                  }
+                } )
+                .catch( error => {
+                    console.error( error );
+                } );
+            </script>
             <input type="file" id="file_input"/>
             <p id="status">Please select a file</p>
             <img id="preview" src="" />
