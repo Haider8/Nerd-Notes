@@ -6,6 +6,8 @@
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
+            {{ form.title.label }}<br>
+            {{ form.title }}<br>
             {{ form.post.label }}<br>
             {{ form.post(id="editor", cols=32, rows=4) }}<br>
             <script>

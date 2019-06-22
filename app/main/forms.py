@@ -22,6 +22,7 @@ class EditProfileForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
     post = TextAreaField('Say something')
     file = FileField('Upload File')
     submit = SubmitField('Submit')
