@@ -1,42 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <table>
-        <tr valign="top">
-            <td><img src="{{ user.avatar(128) }}"></td>
-            <td>
-                <h1>User: {{ user.username }}</h1>
-                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
-                {% if user.last_seen %}<p>Last seen on: <span id="last-seen">{{ user.last_seen }}</span></p>{% endif %}
-                <script>
-                    var utc_time = document.getElementById('last-seen').innerText
-                    document.getElementById('last-seen').innerText = moment.utc(utc_time).local().fromNow()
-                    // console.log(utc_time) 
-
-                    // var date = new Date(utc_time)
-                    // console.log(date)
-                    // var local = moment().utc(date).format('MM/DD/YYYY, h:mm a');
-                    // console.log(local, "- UTC now to local"); 
-                </script>
-                <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
-                {% if user == current_user %}
-                <p><a href="{{ url_for('main.edit_profile') }}">Edit your profile</a></p>
-                {% elif not current_user.is_following(user) %}
-                <p><a href="{{ url_for('main.follow', username=user.username) }}">Follow</a></p>
-                {% else %}
-                <p><a href="{{ url_for('main.unfollow', username=user.username) }}">Unfollow</a></p>
-                {% endif %}
-            </td>
-        </tr>
-    </table>
+<center>
+    <img style="border-radius: 50%; border: 3px solid black" src="{{ user.avatar(128) }}">
+    <br>
+    <h1 class="text-capitalize">{{ user.username }}</h1>
+    {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
     <hr>
-    {% for post in posts %}
-        {% include '_post.html' %}
-    {% endfor %}
-    {% if prev_url %}
-    <a href="{{ prev_url }}">Newer posts</a>
+    {% if user.last_seen %}<p>Last seen: <b><span id="last-seen">{{ user.last_seen }}</span></b></p>{% endif %}
+    <script>
+        var utc_time = document.getElementById('last-seen').innerText
+        document.getElementById('last-seen').innerText = moment.utc(utc_time).local().fromNow()
+        // console.log(utc_time) 
+
+        // var date = new Date(utc_time)
+        // console.log(date)
+        // var local = moment().utc(date).format('MM/DD/YYYY, h:mm a');
+        // console.log(local, "- UTC now to local"); 
+    </script>
+    <p>
+        <button type="button" class="btn btn-dark">
+            Followers <span class="badge badge-light">{{ user.followers.count() }}</span>
+            <span class="sr-only">unread messages</span>
+        </button>
+        <button type="button" class="btn btn-dark">
+            Following <span class="badge badge-light">{{ user.followed.count() }}</span>
+            <span class="sr-only">unread messages</span>
+        </button>
+    </p>
+    {% if user == current_user %}
+    <p><a class="btn btn-primary" href="{{ url_for('main.edit_profile') }}"><i class="fa fa-pencil"></i> Edit your profile</a></p>
+    {% elif not current_user.is_following(user) %}
+    <p><a class="btn btn-outline-dark" href="{{ url_for('main.follow', username=user.username) }}"><i class="fa fa-plus"></i> | Follow</a></p>
+    {% else %}
+    <p><a class="btn btn-outline-dark" href="{{ url_for('main.unfollow', username=user.username) }}"><i class="fa fa-minus"></i> | Unfollow</a></p>
     {% endif %}
-    {% if next_url %}
-    <a href="{{ next_url }}">Older posts</a>
-    {% endif %}
+</center>
+<hr>
+{% for post in posts %}
+{% include '_post.html' %}
+{% endfor %}
+{% if prev_url %}
+<a href="{{ prev_url }}">Newer posts</a>
+{% endif %}
+{% if next_url %}
+<a href="{{ next_url }}">Older posts</a>
+{% endif %}
 {% endblock %}
